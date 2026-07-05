@@ -13,11 +13,58 @@ import { cn } from "@/lib/utils";
 
 import { useStudioWorkbench } from "@/context/StudioWorkbenchContext";
 import { GenerateButton, StylePresetCard } from "./workbench-ui";
+import { stylePresets } from "@/lib/style-presents";
+
+// TUMHARI EXACT LABELS AUR MODELS WALI IMPORTS
 import {
   openRouterImageModelLabels,
   openRouterImageModels,
 } from "@/lib/openRouter-image-model";
-import { stylePresets } from "@/lib/style-presents";
+
+// Frontend Client-Side Compression Logic (11MB Fixer)
+async function compressImageOnClient(file, maxWidth = 1200, quality = 0.7) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = (event) => {
+      const img = new Image();
+      img.src = event.target.result;
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        let width = img.width;
+        let height = img.height;
+
+        if (width > maxWidth) {
+          height = Math.round((height * maxWidth) / width);
+          width = maxWidth;
+        }
+
+        canvas.width = width;
+        canvas.height = height;
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, width, height);
+
+        canvas.toBlob(
+          (blob) => {
+            if (!blob) {
+              reject(new Error("Canvas compression failed"));
+              return;
+            }
+            const compressedFile = new File([blob], file.name.replace(/\.[^/.]+$/, "") + ".jpg", {
+              type: "image/jpeg",
+              lastModified: Date.now(),
+            });
+            resolve(compressedFile);
+          },
+          "image/jpeg",
+          quality
+        );
+      };
+      img.onerror = (err) => reject(err);
+    };
+    reader.onerror = (err) => reject(err);
+  });
+}
 
 export function StudioControlsPanel() {
   const {
@@ -97,7 +144,21 @@ export function StudioControlsPanel() {
           onClick={(e) => {
             e.currentTarget.value = "";
           }}
-          onChange={(e) => replaceFile(e.target.files?.[0] ?? null)}
+          onChange={async (e) => {
+            const rawFile = e.target.files?.[0];
+            if (!rawFile) return;
+
+            if (rawFile.size > 2 * 1024 * 1024) {
+              try {
+                const optimizedFile = await compressImageOnClient(rawFile);
+                replaceFile(optimizedFile);
+              } catch (err) {
+                replaceFile(rawFile);
+              }
+            } else {
+              replaceFile(rawFile);
+            }
+          }}
         />
 
         <div className="mt-5 flex flex-col gap-4 rounded-[1.45rem] border border-border/35 bg-background/22 p-4 sm:flex-row sm:items-center sm:justify-between">
@@ -149,7 +210,16 @@ export function StudioControlsPanel() {
         <div className="mt-4 relative">
           <select
             value={selectedModel}
-            onChange={(event) => selectModel(event.target.value)}
+            onChange={(event) => {
+              const selectedValue = event.target.value;
+              // Strict Check Matrix: Agar custom string me disabled keyword ho toh block kardo
+              if (selectedValue.includes("-disabled")) {
+                const cleanLabel = openRouterImageModelLabels[selectedValue] || "This model";
+                alert(`${cleanLabel} is currently inactive to protect credits. Please use the default FLUX engine.`);
+                return;
+              }
+              selectModel(selectedValue);
+            }}
             className={cn(
               buttonVariants({ variant: "outline" }),
               "h-auto w-full appearance-none rounded-[1.2rem] border-border/35 bg-background/25 px-4 py-3 pr-11 font-medium focus:border-primary",
@@ -179,7 +249,7 @@ export function StudioControlsPanel() {
       <GenerateButton disabled={isGenerateDisabled} isLoading={isLoading} />
 
       <p className="mt-5 text-center text-lg text-muted-foreground">
-       Styling is powered by AI image editing.
+        Styling is powered by AI image editing.
       </p>
 
       {error ? (

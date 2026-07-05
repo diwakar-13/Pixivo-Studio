@@ -13,7 +13,7 @@ export function Footer() {
       <div className="mx-auto max-w-7xl">
         <div className="flex flex-col gap-6 border-b border-border/60 pb-8 lg:flex-row lg:items-end lg:justify-between">
           <div className="max-w-2xl">
-            <p className="caps-sm text-sm font-semibold uppercase text-primary">Luma Studio</p>
+            <p className="caps-sm text-sm font-semibold uppercase text-primary">Pixivo Studio</p>
             <h2 className="mt-4 font-serif text-3xl leading-tight tracking-tight text-foreground sm:text-4xl">
               Classic, private, and beautifully focused AI style transfer.
             </h2>
@@ -88,7 +88,7 @@ export function Footer() {
         </div>
 
         <div className="mt-8 flex flex-col gap-3 border-t border-border/60 pt-6 text-sm text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
-          <p>&copy; {year} Luma Studio</p>
+          <p>&copy; {year} Pixivo Studio</p>
           <p>Private by default. Curated by design.</p>
         </div>
       </div>

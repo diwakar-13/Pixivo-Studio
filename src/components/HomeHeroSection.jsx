@@ -29,8 +29,8 @@ export function HomeHeroSection() {
               <Image
                 src="/logo.png"
                 alt="Luma Studio"
-                width={80}
-                height={80}
+                width={72}
+                height={72}
                 className=" max-h-none max-w-none origin-left scale-[1.55] object-cover"
                 priority
               />

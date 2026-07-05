@@ -34,8 +34,8 @@ const page = async () => {
               <Image
                 src="/logo.png"
                 alt="Luma Studio"
-                width={90}
-                height={90}
+                width={72}
+                height={72}
                 className="mt-2 mr-2  max-h-none max-w-none origin-left scale-[1.55] object-cover"
                 priority
               />

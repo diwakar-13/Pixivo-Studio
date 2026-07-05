@@ -31,7 +31,7 @@ export function HomeHeroSection() {
                 alt="Luma Studio"
                 width={80}
                 height={80}
-                className="h-25 w-25 max-h-none max-w-none origin-left scale-[1.55] object-cover"
+                className=" max-h-none max-w-none origin-left scale-[1.55] object-cover"
                 priority
               />
             </span>

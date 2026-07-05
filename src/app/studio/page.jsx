@@ -36,7 +36,7 @@ const page = async () => {
                 alt="Luma Studio"
                 width={90}
                 height={90}
-                className="mt-2 mr-2 h-25 w-25  origin-left scale-[1.55] object-cover"
+                className="mt-2 mr-2  max-h-none max-w-none origin-left scale-[1.55] object-cover"
                 priority
               />
             </span>

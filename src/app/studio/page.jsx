@@ -34,15 +34,15 @@ const page = async () => {
               <Image
                 src="/logo.png"
                 alt="Luma Studio"
-                width={72}
-                height={72}
-                className="mt-2 mr-2 max-h-none max-w-none origin-left scale-[1.55] object-cover"
+                width={90}
+                height={90}
+                className="mt-2 mr-2 h-25 w-25  origin-left scale-[1.55] object-cover"
                 priority
               />
             </span>
 
-            <p className="text-3xl font-mono text-primary uppercase font-semibold tracking-wide sm:text-[2.15rem]">
-              Luma Studio
+            <p className="text-3xl font-mono text-primary uppercase font-semibold tracking-wider sm:text-[2.15rem]">
+              Pixivo Studio
             </p>
           </Link>
 

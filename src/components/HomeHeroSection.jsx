@@ -24,23 +24,23 @@ export function HomeHeroSection() {
 
       <div className="home-hero-stack">
         <nav className="hero-pill home-nav">
-          <Link href="/" className="home-brand">
-            <span className="relative mr-2 flex h-10 w-10 shrink-0 items-center justify-center overflow-visible">
+          <Link href="/" className="home-brand ">
+            <span className="relative mr-5 flex h-10 w-10 shrink-0 items-center justify-center overflow-visible">
               <Image
                 src="/logo.png"
                 alt="Luma Studio"
-                width={72}
-                height={72}
-                className="h-10 w-10 max-h-none max-w-none origin-left scale-[1.55] object-cover"
+                width={80}
+                height={80}
+                className="h-25 w-25 max-h-none max-w-none origin-left scale-[1.55] object-cover"
                 priority
               />
             </span>
             <div className="min-w-0">
               <span className="caps-2xs block text-sm font-semibold text-foreground">
-                Luma Studio
+               Pixivo Studio
               </span>
               <span className="caps-xs block truncate text-xs uppercase text-muted-foreground">
-                AI image restyling
+               AI Image Styling
               </span>
             </div>
           </Link>
